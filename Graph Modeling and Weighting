@@ -1,77 +1,34 @@
+
 import networkx as nx
 import pandas as pd
-
-# Sample edge data: replace with your processed CSV or JSON
-data = pd.DataFrame([
-    {'u': 'A', 'v': 'B', 'length': 100, 'risk': 0.4, 'scenic': 0.8, 'weather': 0.2},
-    {'u': 'B', 'v': 'C', 'length': 150, 'risk': 0.6, 'scenic': 0.5, 'weather': 0.3},
-    # ... load full dataset
-])
-
-# Normalize risk, scenic, and weather attributes
-def normalize(df, col):
-    return df[col] / df[col].max()
-
-data['norm_risk'] = normalize(data, 'risk')
-data['norm_scenic'] = normalize(data, 'scenic')
-data['norm_weather'] = normalize(data, 'weather')
-
-# User preference weights
-alpha, beta, gamma = 0.5, 0.3, 0.2
-
-# Build directed graph
-G = nx.DiGraph()
-for _, row in data.iterrows():
-    cost = (
-        alpha * row['norm_risk'] +
-        beta * (1 - row['norm_scenic']) +
-        gamma * row['norm_weather']
-    )
-    G.add_edge(
-        row['u'], row['v'],
-        length=row['length'],
-        risk=row['norm_risk'],
-        scenic=row['norm_scenic'],
-        weather=row['norm_weather'],
-        cost=cost
-    )
-
-# Shortest path by cost
-def find_route(graph, source, target):
-    return nx.shortest_path(graph, source, target, weight='cost')
-
-if __name__ == '__main__':
-    route = find_route(G, 'A', 'C')
-    total_cost = sum(G[u][v]['cost'] for u, v in zip(route, route[1:]))
-    print(f"Optimal route: {route}, total cost: {total_cost:.3f}")
-
 import matplotlib.pyplot as plt
 
-# Load normalized edge attribute data
-data = pd.read_csv('data/edges_normalized.csv')
 
-# Plot histogram for risk, scenic, weather
-plt.figure()
-plt.hist(data['norm_risk'], bins=20, label='Risk')
-plt.hist(data['norm_scenic'], bins=20, label='Scenic')
-plt.hist(data['norm_weather'], bins=20, label='Weather')
-plt.xlabel('Score Value')
-plt.ylabel('Frequency')
-plt.title('Distribution of Edge Risk, Scenic, and Weather Scores')
-plt.legend()
-plt.savefig('assets/figure1_histogram.png')
+data = pd.read_csv('data/edges_normalized.csv')  # ensure this file exists
 
-data = pd.DataFrame({
-    'Distance': [2.50, 2.80, 3.00],
-    'Risk': [1.24, 0.81, 1.05],
-    'Scenic': [78, 70, 95],
-    'Weather': [0.75, 0.80, 0.90]
-}, index=['Baseline', 'Safety-Opt', 'Scenic-Opt'])
+for col in ['risk', 'scenic', 'weather']:
+    data[f'norm_{col}'] = data[col] / data[col].max()
 
-# Plot grouped bar chart
-ax = data.plot(kind='bar')
-ax.set_xlabel('Route Type')
-ax.set_ylabel('Metric Value')
-ax.set_title('Comparative Route Metrics')
-plt.tight_layout()
-plt.savefig('assets/figure2_comparison.png')
+
+a, b, c = 0.5, 0.3, 0.2
+
+
+G = nx.DiGraph()
+for _, row in data.iterrows():
+    cost = a * row['norm_risk'] + b * (1 - row['norm_scenic']) + c * row['norm_weather']
+    G.add_edge(row['u'], row['v'], cost=cost)
+
+
+route = nx.shortest_path(G, 'A', 'C', weight='cost')
+cost_sum = sum(G[u][v]['cost'] for u, v in zip(route, route[1:]))
+print(f"Optimal route: {route}, total cost: {cost_sum:.2f}")
+
+
+pos = nx.spring_layout(G)  # or load real coordinates for accurate map
+plt.figure(figsize=(8,6))
+nx.draw(G, pos, node_size=20, edge_color='lightgray')
+nx.draw_networkx_nodes(G, pos, nodelist=route, node_color='red', node_size=50)
+nx.draw_networkx_edges(G, pos, edgelist=list(zip(route, route[1:])), edge_color='red', width=2)
+plt.title('Optimal Dog-Walking Route')
+plt.axis('off')
+plt.savefig('assets/route_example.png', dpi=150)
