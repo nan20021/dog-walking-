@@ -1,0 +1,46 @@
+import networkx as nx
+import pandas as pd
+
+# Sample edge data: replace with your processed CSV or JSON
+data = pd.DataFrame([
+    {'u': 'A', 'v': 'B', 'length': 100, 'risk': 0.4, 'scenic': 0.8, 'weather': 0.2},
+    {'u': 'B', 'v': 'C', 'length': 150, 'risk': 0.6, 'scenic': 0.5, 'weather': 0.3},
+    # ... load full dataset
+])
+
+# Normalize risk, scenic, and weather attributes
+def normalize(df, col):
+    return df[col] / df[col].max()
+
+data['norm_risk'] = normalize(data, 'risk')
+data['norm_scenic'] = normalize(data, 'scenic')
+data['norm_weather'] = normalize(data, 'weather')
+
+# User preference weights
+alpha, beta, gamma = 0.5, 0.3, 0.2
+
+# Build directed graph
+G = nx.DiGraph()
+for _, row in data.iterrows():
+    cost = (
+        alpha * row['norm_risk'] +
+        beta * (1 - row['norm_scenic']) +
+        gamma * row['norm_weather']
+    )
+    G.add_edge(
+        row['u'], row['v'],
+        length=row['length'],
+        risk=row['norm_risk'],
+        scenic=row['norm_scenic'],
+        weather=row['norm_weather'],
+        cost=cost
+    )
+
+# Shortest path by cost
+def find_route(graph, source, target):
+    return nx.shortest_path(graph, source, target, weight='cost')
+
+if __name__ == '__main__':
+    route = find_route(G, 'A', 'C')
+    total_cost = sum(G[u][v]['cost'] for u, v in zip(route, route[1:]))
+    print(f"Optimal route: {route}, total cost: {total_cost:.3f}")
