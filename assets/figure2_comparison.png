@@ -1,1 +1,18 @@
+import pandas as pd
+import matplotlib.pyplot as plt
 
+
+data = pd.DataFrame({
+    'Distance': [2.50, 2.80, 3.00],
+    'Risk': [1.24, 0.81, 1.05],
+    'Scenic': [78, 70, 95],
+    'Weather': [0.75, 0.80, 0.90]
+}, index=['Baseline', 'Safety-Opt', 'Scenic-Opt'])
+
+
+ax = data.plot(kind='bar')
+ax.set_xlabel('Route Type')
+ax.set_ylabel('Metric Value')
+ax.set_title('Comparative Route Metrics')
+plt.tight_layout()
+plt.savefig('assets/figure2_comparison.png')
