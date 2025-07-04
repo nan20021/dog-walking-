@@ -44,3 +44,34 @@ if __name__ == '__main__':
     route = find_route(G, 'A', 'C')
     total_cost = sum(G[u][v]['cost'] for u, v in zip(route, route[1:]))
     print(f"Optimal route: {route}, total cost: {total_cost:.3f}")
+
+import matplotlib.pyplot as plt
+
+# Load normalized edge attribute data
+data = pd.read_csv('data/edges_normalized.csv')
+
+# Plot histogram for risk, scenic, weather
+plt.figure()
+plt.hist(data['norm_risk'], bins=20, label='Risk')
+plt.hist(data['norm_scenic'], bins=20, label='Scenic')
+plt.hist(data['norm_weather'], bins=20, label='Weather')
+plt.xlabel('Score Value')
+plt.ylabel('Frequency')
+plt.title('Distribution of Edge Risk, Scenic, and Weather Scores')
+plt.legend()
+plt.savefig('assets/figure1_histogram.png')
+
+data = pd.DataFrame({
+    'Distance': [2.50, 2.80, 3.00],
+    'Risk': [1.24, 0.81, 1.05],
+    'Scenic': [78, 70, 95],
+    'Weather': [0.75, 0.80, 0.90]
+}, index=['Baseline', 'Safety-Opt', 'Scenic-Opt'])
+
+# Plot grouped bar chart
+ax = data.plot(kind='bar')
+ax.set_xlabel('Route Type')
+ax.set_ylabel('Metric Value')
+ax.set_title('Comparative Route Metrics')
+plt.tight_layout()
+plt.savefig('assets/figure2_comparison.png')
