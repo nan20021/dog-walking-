@@ -14,11 +14,16 @@ Welcome to the **Optimal Dog-Walking Route Recommendation System** project site.
 
 
 
-1. **Browse the docs** by clicking the links above.  
-2. **Run the scripts** locally after cloning the repo:
-   ```bash
-   python scripts/preprocess_edges.py
-   python scripts/graph_model.py
-   python scripts/plot_descriptive.py
-   python scripts/plot_comparison.py
+
+python scripts/preprocess_edges.py
+python scripts/graph_model.py
+python scripts/plot_descriptive.py
+python scripts/plot_comparison.py
+
+
+
+
+![Figure 2: Comparative Route Metrics](/docs/assets/figure2_comparison.png)
+
+![Figure 3: Example Optimal Dog-Walking Route](/docs/assets/route_example.png)
 
