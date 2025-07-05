@@ -2,6 +2,8 @@
 title: Methods & Implementation
 ---
 
+# Methods & Implementation
+
 
 
 This page walks through our data preparation, graph modeling, pathfinding, and plotting pipeline for the Optimal Dog-Walking Route Recommendation System.
