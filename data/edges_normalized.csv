@@ -1,14 +1,8 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-
-data = pd.read_csv('data/edges_normalized.csv')
-
-plt.figure()
-plt.hist(data['norm_risk'], bins=20, label='Risk')
-plt.hist(data['norm_scenic'], bins=20, label='Scenic')
-plt.hist(data['norm_weather'], bins=20, label='Weather')
-plt.xlabel('Score Value')
-plt.ylabel('Frequency')
-plt.title('Distribution of Edge Risk, Scenic, and Weather Scores')
-plt.legend()
-plt.savefig('assets/figure1_histogram.png')
+df['risk']   = df['risk_raw']   / df['risk_raw'].max()
+df['scenic'] = df['scenic_raw'] / df['scenic_raw'].max()
+df['weather']= df['weather_raw']/ df['weather_raw'].max()
+u,v,length,risk,scenic,weather
+1001,1002,85,0.45,0.70,0.20
+1002,1003,120,0.60,0.55,0.30
+1003,1005,95,0.30,0.80,0.10
+1005,1008,110,0.50,0.65,0.25
