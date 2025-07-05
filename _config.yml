@@ -1,0 +1,24 @@
+
+title: Optimal Dog-Walking Route Recommendation
+description: A data-driven prototype for safe and enjoyable dog-walking route planning.
+
+
+theme: minima
+
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+
+permalink: /:path/
+
+plugins:
+  - jekyll-feed   
+
+
+exclude:
+  - scripts
+  - data
+
