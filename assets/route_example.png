@@ -1,1 +1,5 @@
+python scripts/graph_model.py
+plt.title('Example Optimal Dog-Walking Route')
+plt.axis('off')
+plt.savefig('assets/route_example.png', dpi=150)
 
