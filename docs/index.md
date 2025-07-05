@@ -23,7 +23,5 @@ python scripts/plot_comparison.py
 
 
 
-![Figure 2: Comparative Route Metrics](/docs/assets/figure2_comparison.png)
 
-![Figure 3: Example Optimal Dog-Walking Route](/docs/assets/route_example.png)
 
