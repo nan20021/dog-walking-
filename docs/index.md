@@ -2,24 +2,19 @@
 title: Optimal Dog-Walking Route Recommendation
 ---
 
-# Optimal Dog-Walking Route Recommendation System
+# Optimal Dog-Walking Route Recommendation
 
-Welcome to the **Optimal Dog-Walking Route Recommendation System** project site. This data-driven prototype suggests safe and enjoyable walking routes tailored to your dog’s characteristics and real-time conditions.
+Welcome to the **Optimal Dog-Walking Route Recommendation System** project site. This project integrates spatial and environmental data to generate safe and enjoyable walking routes for dogs and their owners.
 
-## Site Contents
+## Navigation
 
 - [Methods & Implementation](graph_modeling.html)  
 - [Results & Figures](results.html)  
-- [Conclusion & Next Steps](conclusion.html)  
+- [Conclusion & Next Steps](conclusion.html) *(optional)*  
 
 ## Quick Start
 
-Clone the repo and run:
-
-```bash
-git clone https://github.com/<YOUR_USERNAME>/<YOUR_REPO>.git
-cd <YOUR_REPO>
-python scripts/preprocess_edges.py
-python scripts/graph_model.py
-python scripts/plot_descriptive.py
-python scripts/plot_comparison.py
+1. **Clone the repository**  
+   ```bash
+   git clone https://github.com/<YOUR_USERNAME>/<YOUR_REPO>.git
+   cd <YOUR_REPO>
